@@ -1,3 +1,6 @@
+// Global Variables
+var allEnemies , enemy , level , player;
+
 // SuperClasses
 
 var Character = function (sprite, x, y) {
@@ -6,7 +9,8 @@ var Character = function (sprite, x, y) {
     this.y = y;
 
 };
-// Draw the enemy on the screen, required method for game
+
+// Draw the Chracter(Enemy and Player) on the screen, required method for game
 Character.prototype.render = function () {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
@@ -16,8 +20,11 @@ Character.prototype.render = function () {
 var Enemy = function(sprite, x , y , speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
+
+// Superclass function call
     Character.call(this, sprite, x , y);
 
+    // random speed for all the enemies
     this.speed = Math.floor((Math.random() * 250) + 100);
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -52,6 +59,7 @@ Enemy.prototype.update = function(dt) {
 // a handleInput() method.
 
 var Player = function (sprite, x , y , speed) {
+    // SuperClass Character call
     Character.call(this, sprite, x , y);
     // player moving at 60px speed
     this.speed = 60;
@@ -74,7 +82,7 @@ Player.prototype.handleInput = function (pressKey) {
     if (pressKey==="up") {
              if (this.y < 65) {
         this.reset();
-
+        // if Player reaches water increment level by 1 
         level++;
 
         console.log("Current Level : " + level );
@@ -109,7 +117,9 @@ for (var i = 0; i < allEnemies.length; i++) {
         if (Math.abs(player.x - allEnemies[i].x) <= 40) {
             if (Math.abs(player.y - allEnemies[i].y) <= 40) {
                 player.reset();
+                // deacreasing the level of Game
                 decreaseLevel();
+                // Displaying the updated level
                 gameStats();
                 console.log("Current Level : " + level );
       
@@ -120,6 +130,7 @@ for (var i = 0; i < allEnemies.length; i++) {
 
 // Increasing level of the game by adding a Bug everytime level is increased by 1 
 var increaseLevel = function (level) {
+// Increasing the enemies as level increased
     allEnemies.length = 0; 
     for (var i = 0; i < level; i++) {
         var enemy = new Enemy('images/enemy-bug.png', -3, Math.random() * 190 + 50 );
@@ -136,6 +147,7 @@ var maxLevel = function(){
     }
 };
 
+// Take one enemy out 
 var decreaseLevel = function() {
     if (allEnemies.length >=1) {
         allEnemies.pop(enemy);
@@ -152,17 +164,18 @@ var gameStats = function() {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
+    allEnemies = [];
+    // initiating first enemy
+    enemy = new Enemy ('images/enemy-bug.png', -3 , 60);
+    allEnemies.push(enemy);
+
+    level = 1;
+
 // Place the player object in a variable called player
-var allEnemies = [];
 
-var enemy = new Enemy ('images/enemy-bug.png', -3 , 60);
-allEnemies.push(enemy);
+    player  = new Player('images/char-boy.png', 200 , 380);
 
-var level = 1;
-
-var player  = new Player('images/char-boy.png', 200 , 380);
-
-
+// Calling method to display Level and Enemies
 gameStats();
 
 // This listens for key presses and sends the keys to your
