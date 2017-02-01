@@ -1,10 +1,11 @@
 # Classic Arcade Game , Frogger Clone :frog:
  This is a variation of the classic Frogger Arcade game , and its a third project of Nano-Degree Front-end Web Developer program at [Udacity](www.udacity.com)
+ 
 ## Objectives
  Get the player to move accross the grey bricks towards the water without getting hit by the bugs . Users level increases by 1 for each time player reaches the water. The number of bugs also increases with each level and are randomly placed . Once Player been hit by the bug level will deacrese as well as number of bugs by 1 .
-https:
- ## How to run
-  [Download](//github.com/aaqibkhaan/frontend-nanodegree-arcade-game) the repository in your Desktop , Unzip it and open the "index.html" file in your browser.
+ 
+## How to run
+  [Download](https://github.com/aaqibkhaan/frontend-nanodegree-arcade-game/archive/master.zip) the repository in your Desktop , Unzip it and open the "index.html" file in your browser or you can [Clone](https://github.com/aaqibkhaan/frontend-nanodegree-arcade-game) the repository in your desktop directory.
 
 ## How to Play
 Use the arrows :arrow_up: :arrow_right: :arrow_down: :arrow_left: from the keyboard to move the player on the Canvas.
