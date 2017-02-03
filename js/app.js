@@ -1,5 +1,6 @@
 // Global Variables
-var allEnemies , enemy , level , player;
+var allEnemies , enemy , level , player , TILE_WIDTH = 101, TILE_HEIGHT = 83;
+
 
 // SuperClasses
 
@@ -12,7 +13,7 @@ var Character = function (sprite, x, y) {
 
 // Draw the Chracter(Enemy and Player) on the screen, required method for game
 Character.prototype.render = function () {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
 };
 
@@ -49,7 +50,7 @@ Enemy.prototype.update = function(dt) {
 
     // checking collision with Enemies
 
-    checkCollision(this);
+    enemy.checkCollision(this);
 
 };
 
@@ -62,7 +63,7 @@ var Player = function (sprite, x , y , speed) {
     // SuperClass Character call
     Character.call(this, sprite, x , y);
     // player moving at 60px speed
-    this.speed = 60;
+    this.speed = TILE_WIDTH;
 
 };
 
@@ -87,20 +88,18 @@ Player.prototype.handleInput = function (pressKey) {
 
         console.log("Current Level : " + level );
 
-        increaseLevel(level);
-        gameStats();
-        maxLevel();
-
+        player.increaseLevel(level);
+        player.gameStats();
     } else {
-        this.y -= this.speed +20; 
+        this.y -= TILE_HEIGHT; 
     }
     } else if (pressKey=="down" && this.y < 400) {
-        this.y += this.speed -20;
+        this.y += TILE_HEIGHT;
    
     } else if (pressKey == "right" && this.x < 400) {
-        this.x += this.speed;
+        this.x += TILE_WIDTH;
     } else if (pressKey == "left" && this.x > 0) {
-        this.x -= this.speed;
+        this.x -= TILE_WIDTH;
     }
 };
 
@@ -111,25 +110,23 @@ Player.prototype.reset = function () {
 };
 
 // Collision Detection between Enemies and Player
-var checkCollision = function (anEnemy) {
+Enemy.prototype.checkCollision = function (anEnemy) {
 // if player reaches near Enemy by 40 px in any direction player location will be reset
-for (var i = 0; i < allEnemies.length; i++) {
-        if (Math.abs(player.x - allEnemies[i].x) <= 40) {
-            if (Math.abs(player.y - allEnemies[i].y) <= 40) {
+        if (Math.abs(player.x - anEnemy.x) <= 40) {
+            if (Math.abs(player.y - anEnemy.y) <= 40) {
                 player.reset();
                 // deacreasing the level of Game
-                decreaseLevel();
+                player.decreaseLevel();
                 // Displaying the updated level
-                gameStats();
+                player.gameStats();
                 console.log("Current Level : " + level );
       
             }
         }
-}
 };
 
 // Increasing level of the game by adding a Bug everytime level is increased by 1 
-var increaseLevel = function (level) {
+Player.prototype.increaseLevel = function (level) {
 // Increasing the enemies as level increased
     allEnemies.length = 0; 
     for (var i = 0; i < level; i++) {
@@ -139,16 +136,8 @@ var increaseLevel = function (level) {
     }
 };
 
-// checking if the player has reached Maximum limit of level which is 5
-var maxLevel = function(){
-    if (level >= 5) {
-        console.log("Bravo!! You have reached Maximum Level , Please restart the Game to Play More");
-        decreaseLevel();
-    }
-};
-
 // Take one enemy out 
-var decreaseLevel = function() {
+Player.prototype.decreaseLevel = function() {
     if (allEnemies.length >=1) {
         allEnemies.pop(enemy);
         level--;
@@ -157,7 +146,7 @@ var decreaseLevel = function() {
 };
 
 // displaying Statistics of the Game
-var gameStats = function() {
+Player.prototype.gameStats = function() {
    document.getElementById('gameStats').innerHTML = "Level :" + level.toString();
     document.getElementById('nOfEnemies').innerHTML = "Enemies : " + allEnemies.length.toString()  ; 
 };
@@ -176,7 +165,7 @@ var gameStats = function() {
     player  = new Player('images/char-boy.png', 200 , 380);
 
 // Calling method to display Level and Enemies
-gameStats();
+player.gameStats();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
