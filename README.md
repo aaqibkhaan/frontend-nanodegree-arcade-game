@@ -34,7 +34,10 @@ Use the arrows :arrow_up: :arrow_right: :arrow_down: :arrow_left: from the keybo
 * <https://github.com/udacity/frontend-nanodegree-arcade-game>
 * <https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API>
 
-	
+## License
+The Project is licensed under the [MIT License](https://github.com/aaqibkhaan/frontend-nanodegree-arcade-game/blob/master/License.txt)
+
+
 
 
 frontend-nanodegree-arcade-game
